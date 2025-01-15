@@ -31,7 +31,7 @@ dataset2 <- dataset %>%
     `Agar count cfu/mL` >= 10001 ~ 1)) %>% 
   mutate(niveau.BAPC.fact01=as.factor(niveau.BAPC.fact01)) %>% 
   mutate(AsymYN= ifelse(is.na(ASYMM), "no", "yes")) %>% 
-  mutate(MasYN = ifelse(is.na(MAS), "no", "yes"))
+  mutate(MasYN = ifelse(is.na(MAS),   "no", "yes"))
   
          
          
@@ -58,9 +58,11 @@ table(dataset2$MasYN, dataset2$niveau.BAPC.fact01)
 
 ```{r}
 
-mod <- glm(niveau.BAPC.fact01 ~ `DEF CODE`, data=dataset2, family=binomial)
+mod_MAS <- glm(niveau.BAPC.fact01 ~ MasYN + `Udder half`, data=dataset2, family=binomial)
+mod_ASYMM <- glm(niveau.BAPC.fact01 ~ AsymYN + `Udder half`, data=dataset2, family=binomial)
 
-summary(mod)
+summary(mod_MAS)
+summary(mod_ASYMM)
 
 ```
 
