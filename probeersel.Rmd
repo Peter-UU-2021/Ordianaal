@@ -54,6 +54,13 @@ table(dataset2$`DEF CODE`, dataset2$`Udder half`)
 table(dataset2$AsymYN, dataset2$niveau.BAPC.fact01)
 
 table(dataset2$MasYN, dataset2$niveau.BAPC.fact01)
+
+dataset3 <- subset(dataset2, dataset2$MasYN=="yes" & niveau.BAPC.fact01=="1")
+table(dataset3$`DEF CODE`)
+
+dataset3 <- subset(dataset2, dataset2$AsymYN=="yes" & niveau.BAPC.fact01=="1")
+table(dataset3$`DEF CODE`)
+
 ```
 
 ```{r}
