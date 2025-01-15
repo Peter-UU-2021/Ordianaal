@@ -1,6 +1,8 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
@@ -55,10 +57,28 @@ table(dataset2$AsymYN, dataset2$niveau.BAPC.fact01)
 
 table(dataset2$MasYN, dataset2$niveau.BAPC.fact01)
 
+dataset3 <- subset(dataset2, dataset2$AsymYN=="yes" & niveau.BAPC.fact01=="1")
+table(dataset3$`DEF CODE`)
+
+dataset3 <- subset(dataset2, dataset2$AsymYN=="yes" & niveau.BAPC.fact01=="0")
+table(dataset3$`DEF CODE`)
+
+dataset3 <- subset(dataset2, dataset2$AsymYN=="no" & niveau.BAPC.fact01=="0")
+table(dataset3$`DEF CODE`)
+
+dataset3 <- subset(dataset2, dataset2$AsymYN=="no" & niveau.BAPC.fact01=="1")
+table(dataset3$`DEF CODE`)
+
 dataset3 <- subset(dataset2, dataset2$MasYN=="yes" & niveau.BAPC.fact01=="1")
 table(dataset3$`DEF CODE`)
 
-dataset3 <- subset(dataset2, dataset2$AsymYN=="yes" & niveau.BAPC.fact01=="1")
+dataset3 <- subset(dataset2, dataset2$MasYN=="yes" & niveau.BAPC.fact01=="0")
+table(dataset3$`DEF CODE`)
+
+dataset3 <- subset(dataset2, dataset2$MasYN=="no" & niveau.BAPC.fact01=="1")
+table(dataset3$`DEF CODE`)
+
+dataset3 <- subset(dataset2, dataset2$MasYN=="no" & niveau.BAPC.fact01=="0")
 table(dataset3$`DEF CODE`)
 
 ```
