@@ -1,0 +1,59 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(readxl)
+library(tidyverse)
+library(MASS)
+library(forcats)
+library(ggplot2)
+
+
+dataset <- read_xlsx("SUPER SHEDDERs SPECIES.xlsx", sheet="all", range="A1:P197")
+
+dataset2 <- dataset %>% 
+  mutate(`Goat ID`= paste0("s",`Goat ID`)) %>% 
+  mutate(niveau.BAPC.fact=case_when(
+    `Agar count cfu/mL` < 100 ~ "low",
+    `Agar count cfu/mL` >= 101 & `Agar count cfu/mL` < 10000 ~ "medium",
+    `Agar count cfu/mL` >= 10001 ~ "high"
+  )) %>% 
+  mutate(niveau.BAPC.fact=as.factor(niveau.BAPC.fact)) %>% 
+  mutate(niveau.BAPC.fact=fct_relevel(niveau.BAPC.fact, c("low", "medium", "high"))) %>% 
+  mutate(niveau.BAPC.fact01=case_when(
+    `Agar count cfu/mL` < 10000 ~ 0,
+    `Agar count cfu/mL` >= 10001 ~ 1)) %>% 
+  mutate(niveau.BAPC.fact01=as.factor(niveau.BAPC.fact01)) 
+  
+         
+         
+         
+
+```
+
+
+
+```{r}
+p <- ggplot(dataset2, aes(x=`DEF CODE`, y=`log10 BAPC`, col=`Udder half`))+
+  geom_boxplot()+
+  geom_point(position = position_jitterdodge(
+      dodge.width = 0.75, jitter.width = .5), alpha=0.5, size=1)
+
+print(p)
+
+table(dataset2$`DEF CODE`, dataset2$`Udder half`)
+
+```
+
+```{r}
+
+mod <- glm(niveau.BAPC.fact01 ~ `DEF CODE`, data=dataset2, family=binomial)
+
+```
+
